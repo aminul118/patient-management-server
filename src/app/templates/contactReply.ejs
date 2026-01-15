@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Reply</title>
+    <style>
+      /* Base styles */
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+
+      /* Email container */
+      .container {
+        max-width: 600px;
+        margin: 30px auto;
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Centered logo */
+      .header {
+        width: 180px;
+        height: 50px;
+        margin: 0 auto 20px auto;
+        display: block;
+      }
+      /* Heading */
+      h1 {
+        color: #007bff;
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+
+      /* Text content */
+      p {
+        line-height: 1.6;
+        margin: 10px 0;
+        font-size: 15px;
+      }
+
+      /* Divider line */
+      .divider {
+        height: 1px;
+        background-color: #e0e0e0;
+        margin: 30px 0;
+      }
+
+      /* Signature */
+      .regards {
+        font-weight: 600;
+        margin-top: 30px;
+        color: #444;
+      }
+
+      .footer {
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+        text-align: center;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .container {
+          padding: 25px 20px;
+        }
+        h1 {
+          font-size: 20px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        class="header"
+        src="https://www.a1-lifts.com/logo.svg"
+        alt="Company Logo"
+      />
+
+      <h1>Hello <%= name %>,</h1>
+      <p>
+        Thank you for contacting
+        <strong>A1 Lifts & Engineering </strong>
+      </p>
+      <p>
+        We truly appreciate you reaching out. Our team has received your message
+        and will get back to you as soon as possible. In the meantime, feel free
+        to explore more about us on our website.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="regards">Warm regards,</p>
+      <p><%= adminName %><br />A1 Lifts & Engineering .</p>
+
+      <div class="footer">
+        &copy; <%= new Date().getFullYear() %> A1 Lifts & Engineering . All
+        rights reserved.
+      </div>
+    </div>
+  </body>
+</html>
