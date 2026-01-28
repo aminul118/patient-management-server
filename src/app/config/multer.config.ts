@@ -6,22 +6,27 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinaryUploads,
   params: {
     public_id: (req, file) => {
-      const originalName = file.originalname;
-      const extension = originalName.split('.').pop();
-
-      const baseName = originalName
-        .replace(`.${extension}`, '')
+      const fileName = file.originalname
         .toLowerCase()
-        .replace(/\s+/g, '-') // replace spaces with dash
-        .replace(/[^a-z0-9-]/g, ''); // remove special characters
+        .replace(/\s+/g, '-') // empty space remove replace with dash
+        .replace(/\./g, '-')
+        // eslint-disable-next-line no-useless-escape
+        .replace(/[^a-z0-9\-\.]/g, ''); // non alpha numeric - !@#$
 
-      const uniqueFileName = `${baseName}-${Date.now()}-${Math.random()
-        .toString(36)
-        .substring(2)}.${extension}`;
+      const extension = file.originalname.split('.').pop();
+
+      const uniqueFileName =
+        Math.random().toString(36).substring(2) +
+        '-' +
+        Date.now() +
+        '-' +
+        fileName +
+        '.' +
+        extension;
 
       return uniqueFileName;
     },
   },
 });
 
-export const multerUpload = multer({ storage });
+export const multerUpload = multer({ storage: storage });

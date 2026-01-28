@@ -2,10 +2,12 @@ export interface EnvConfig {
   PORT: string;
   DB_URL: string;
   NODE_ENV: 'development' | 'production';
-  JWT_ACCESS_SECRET: string;
-  JWT_ACCESS_EXPIRES: string;
-  JWT_REFRESH_SECRET: string;
-  JWT_REFRESH_EXPIRES: string;
+  JWT: {
+    JWT_ACCESS_SECRET: string;
+    JWT_ACCESS_EXPIRES: string;
+    JWT_REFRESH_SECRET: string;
+    JWT_REFRESH_EXPIRES: string;
+  };
   BCRYPT_SALT_ROUND: number;
   SUPER_ADMIN_EMAIL: string;
   SUPER_ADMIN_PASSWORD: string;

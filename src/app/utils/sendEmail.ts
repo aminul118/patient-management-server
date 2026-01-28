@@ -5,7 +5,7 @@ import AppError from '../errorHelpers/AppError';
 import envVars from '../config/env';
 import { SendEmailOptions } from '../types';
 import nodeMailerTransporter from '../config/nodemailer.config';
-import logger from './logger';
+import { logger } from './logger';
 
 const sendEmail = async ({
   to,
@@ -39,9 +39,9 @@ const sendEmail = async ({
       })),
     });
 
-    logger('log', `Email sent to ${to}: ${info.messageId}`);
+    logger.info(`Email sent to ${to}: ${info.messageId}`);
   } catch (error: any) {
-    logger('error', error.message);
+    logger.error(error.message);
     throw new AppError(401, 'Email error');
   }
 };

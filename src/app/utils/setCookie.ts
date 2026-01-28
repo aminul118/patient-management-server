@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import envVars from '../config/env';
 
 export interface AuthTokens {
   accessToken?: string;
@@ -17,7 +18,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       sameSite,
       domain,
       path: '/', // always include
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: Number(envVars.JWT.JWT_ACCESS_EXPIRES),
     });
   }
 
@@ -28,7 +29,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       sameSite,
       domain,
       path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+      maxAge: Number(envVars.JWT.JWT_REFRESH_EXPIRES),
     });
   }
 };
