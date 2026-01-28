@@ -58,19 +58,11 @@ export class QueryBuilder<T> {
   }
 
   /** Pagination */
-  /** Pagination */
   paginate(): this {
-    // Convert limit to number and enforce max of 50
-    let limit = Number(this.query.limit) || 10;
-    if (limit > 50) {
-      limit = 50;
-    }
-
-    // Calculate pagination values
     const page = Number(this.query.page) || 1;
+    const limit = Number(this.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    // Apply to query
     this.modelQuery = this.modelQuery.skip(skip).limit(limit);
     return this;
   }

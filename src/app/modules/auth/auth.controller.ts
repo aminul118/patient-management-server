@@ -69,7 +69,7 @@ const getNewAccessToken = catchAsync(async (req: Request, res: Response) => {
 const logout = catchAsync(async (req: Request, res: Response) => {
   const isProduction = process.env.NODE_ENV === 'production';
   const sameSite = isProduction ? 'none' : 'lax';
-  const domain = isProduction ? '.A1 Lifts & Engineering bd.com' : undefined;
+  const domain = isProduction ? '.aminuldev.site' : undefined;
 
   res.clearCookie('accessToken', {
     httpOnly: true,

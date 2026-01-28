@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ejs from 'ejs';
 import path from 'path';
@@ -6,6 +5,7 @@ import AppError from '../errorHelpers/AppError';
 import envVars from '../config/env';
 import { SendEmailOptions } from '../types';
 import nodeMailerTransporter from '../config/nodemailer.config';
+import logger from './logger';
 
 const sendEmail = async ({
   to,
@@ -39,14 +39,10 @@ const sendEmail = async ({
       })),
     });
 
-    if (envVars.NODE_ENV === 'development') {
-      console.log(` Email sent to ${to}: ${info.messageId}`);
-    }
+    logger('log', `Email sent to ${to}: ${info.messageId}`);
   } catch (error: any) {
-    if (envVars.NODE_ENV === 'development') {
-      console.log('ERROR-->', error.message);
-    }
-    throw new AppError(401, 'Email sending failed');
+    logger('error', error.message);
+    throw new AppError(401, 'Email error');
   }
 };
 

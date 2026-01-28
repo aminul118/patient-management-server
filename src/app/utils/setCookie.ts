@@ -8,7 +8,7 @@ export interface AuthTokens {
 export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
   const isProduction = process.env.NODE_ENV === 'production';
   const sameSite = isProduction ? 'none' : 'lax'; // allow cross-subdomain in prod
-  const domain = isProduction ? '.a1-lifts.com' : undefined;
+  const domain = isProduction ? '.shrlbd.com' : undefined;
 
   if (tokenInfo.accessToken) {
     res.cookie('accessToken', tokenInfo.accessToken, {
@@ -17,7 +17,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       sameSite,
       domain,
       path: '/', // always include
-      maxAge: 86400000, // 1 day in sec
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     });
   }
 
@@ -28,7 +28,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       sameSite,
       domain,
       path: '/',
-      maxAge: 604800000, // 7 days in second
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     });
   }
 };

@@ -4,6 +4,7 @@ import { AuthRouter } from '../../modules/auth/auth.route';
 import { OTPRouter } from '../../modules/otp/otp.route';
 import { ContactRouter } from '../../modules/contact/contact.route';
 import { IModuleRoutes } from '../../types';
+import { GdmRouter } from '../../modules/patient-management/gdm/gdm.router';
 
 const router = Router();
 
@@ -23,6 +24,10 @@ const moduleRoutes: IModuleRoutes[] = [
   {
     path: '/contact',
     element: ContactRouter,
+  },
+  {
+    path: '/gdm',
+    element: GdmRouter,
   },
 ];
 
