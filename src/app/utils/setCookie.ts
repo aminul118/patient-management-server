@@ -28,7 +28,7 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
       sameSite,
       domain,
       path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     });
   }
 };

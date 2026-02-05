@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import passport from 'passport';
 import {
@@ -18,7 +19,6 @@ import AppError from '../errorHelpers/AppError';
 import httpStatus from 'http-status-codes';
 import { IsActive, Role } from '../modules/user/user.interface';
 import sendOTP from '../modules/otp/otp.utils';
-import { logger } from '../utils/logger';
 
 // ----------------------------
 // Local Strategy (email/password)
@@ -84,7 +84,9 @@ const localVerifyFunction: VerifyFunctionWithRequest = async (
 
     return done(null, isUserExist);
   } catch (error) {
-    logger.error(error);
+    if (envVars.NODE_ENV === 'development') {
+      console.log(error);
+    }
     return done(error);
   }
 };
@@ -150,7 +152,7 @@ const googleVerifyFunction = async (
 
     return done(null, isUserExist);
   } catch (error) {
-    logger.error('Google strategy error:', error);
+    console.error('Google strategy error:', error);
     return done(error);
   }
 };
@@ -174,7 +176,9 @@ passport.deserializeUser(
       const user = await User.findById(id);
       done(null, user);
     } catch (error) {
-      logger.error('Deserialize', error);
+      if (envVars.NODE_ENV === 'development') {
+        console.log('Deserialize', error);
+      }
       done(error);
     }
   },

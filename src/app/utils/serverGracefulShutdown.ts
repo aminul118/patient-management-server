@@ -1,16 +1,16 @@
+/* eslint-disable no-console */
 import { Server } from 'http';
-import { logger } from './logger';
 
 const serverGracefulShutdown = (server: Server) => {
   const shutdown = (reason: string, err?: unknown) => {
-    logger.info(
+    console.log(
       `⚠️  ${reason} --> Server shutting down gracefully.`,
       err || '',
     );
 
     if (server) {
       server.close(() => {
-        logger.info('🔻 Server closed.');
+        console.log('🔻 Server closed.');
         process.exit(1);
       });
     } else {

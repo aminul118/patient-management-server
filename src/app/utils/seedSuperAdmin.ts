@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+/* eslint-disable no-console */
 import bcrypt from 'bcryptjs';
 import envVars from '../config/env';
 import { IAuthProvider, IUser, Role } from '../modules/user/user.interface';
 import { User } from '../modules/user/user.model';
 import { Counter } from '../modules/counter/counter.model';
-import { logger } from './logger';
 
 const seedSupperAdmin = async () => {
   try {
@@ -14,11 +12,11 @@ const seedSupperAdmin = async () => {
     });
 
     if (isSupperAdminExist) {
-      logger.info('❌ Super admin already exists');
+      console.log('❌ Super admin already exists');
       return;
     }
 
-    logger.info('Trying to create super admin...');
+    console.log('Trying to create super admin...');
 
     const hashedPassword = await bcrypt.hash(
       envVars.SUPER_ADMIN_PASSWORD,
@@ -49,9 +47,9 @@ const seedSupperAdmin = async () => {
     };
 
     const superAdmin = await User.create(payload);
-    logger.info('✅ Super admin created successfully \n', superAdmin);
-  } catch (error: any) {
-    logger.error(error.message);
+    console.log('✅ Super admin created successfully \n', superAdmin);
+  } catch (error) {
+    console.log(error);
   }
 };
 
