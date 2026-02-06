@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import { CorsOptions } from 'cors';
-import envVars from './env';
+import { logger } from '../utils/logger';
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://aminuldev.site',
-  'https://www.aminuldev.site',
+  'https://patient-manage.site',
+  'https://www.patient-manage.site',
 ];
 
 /**
@@ -31,9 +30,7 @@ const corsOptions: CorsOptions = {
     if (isAllowed) {
       callback(null, true);
     } else {
-      if (envVars.NODE_ENV === 'development') {
-        console.warn(`🚫 Blocked CORS request from origin: ${origin}`);
-      }
+      logger.error(`🚫 Blocked CORS request from origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
