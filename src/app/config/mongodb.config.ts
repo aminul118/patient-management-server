@@ -6,7 +6,7 @@ import { logger } from '../utils/logger';
 const connectDB = async () => {
   try {
     await mongoose.connect(envVars.DB_URL);
-    logger.info('✅ Connected to MongoDB');
+    logger.info('✅ MongoDB Connected');
   } catch (error: any) {
     logger.error(' MongoDB connection failed', error.message);
   }

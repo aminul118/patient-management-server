@@ -41,11 +41,9 @@ app.use('/api/v1', router.v1);
 
 //  Test route
 app.get('/', (req: Request, res: Response) => {
-  const siteEnv =
-    process.env.NODE_ENV === 'development' ? 'Development' : 'Production';
   res.status(200).json({
     status: 200,
-    env: siteEnv,
+    env: envVars.NODE_ENV,
     message: 'Server running',
     time: new Date(),
   });
