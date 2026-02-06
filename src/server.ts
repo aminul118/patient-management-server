@@ -3,7 +3,6 @@ import app from './app';
 import envVars, { envFile } from './app/config/env';
 import seedSupperAdmin from './app/utils/seedSuperAdmin';
 import { connectRedis } from './app/config/redis.config';
-
 import connectDB from './app/config/mongodb.config';
 import serverGracefulShutdown from './app/utils/serverGracefulShutdown';
 import { logger } from './app/utils/logger';

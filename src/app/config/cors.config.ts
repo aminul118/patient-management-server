@@ -7,13 +7,8 @@ const allowedOrigins = [
   'https://www.patient-manage.site',
 ];
 
-/**
- * Production-ready CORS configuration.
- * Dynamically checks allowed origins and supports credentials.
- */
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
-    // Allow non-browser requests (like server-to-server or curl)
     if (!origin) return callback(null, true);
 
     const normalizedOrigin = origin
@@ -27,16 +22,16 @@ const corsOptions: CorsOptions = {
       return normalizedOrigin === normalizedAllowed;
     });
 
-    if (isAllowed) {
-      callback(null, true);
-    } else {
+    if (isAllowed) callback(null, true);
+    else {
       logger.error(`🚫 Blocked CORS request from origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  exposedHeaders: ['Set-Cookie'],
   optionsSuccessStatus: 204,
 };
 
