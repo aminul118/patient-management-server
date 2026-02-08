@@ -21,57 +21,53 @@ const createUserToken = (user: Partial<IUser>) => {
 
   const refreshToken = generateToken(
     jwtPayload,
-    envVars.JWT_ACCESS_SECRET,
+    envVars.JWT_REFRESH_SECRET,
     envVars.JWT_REFRESH_EXPIRES,
   );
-  return {
-    accessToken,
-    refreshToken,
-  };
+
+  return { accessToken, refreshToken };
 };
 
 const createNewAccessTokenWithRefreshToken = async (refreshToken: string) => {
-  const verifiedRefreshToken = verifyToken(
+  const verified = verifyToken(
     refreshToken,
     envVars.JWT_REFRESH_SECRET,
   ) as JwtPayload;
 
-  const isUserExist = await User.findOne({ email: verifiedRefreshToken.email });
+  //  Better: use userId
+  const user = await User.findById(verified.userId);
 
-  if (!isUserExist) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'User does not exist');
-  }
+  if (!user) throw new AppError(httpStatus.BAD_REQUEST, 'User does not exist');
+
   if (
-    isUserExist.isActive === IsActive.BLOCKED ||
-    isUserExist.isActive === IsActive.INACTIVE
+    user.isActive === IsActive.BLOCKED ||
+    user.isActive === IsActive.INACTIVE
   ) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      `User is ${isUserExist.isActive}`,
-    );
+    throw new AppError(httpStatus.BAD_REQUEST, `User is ${user.isActive}`);
   }
-  if (isUserExist.isDeleted) {
+
+  if (user.isDeleted)
     throw new AppError(httpStatus.BAD_REQUEST, 'User is deleted');
-  }
 
   const jwtPayload = {
-    userId: isUserExist._id,
-    email: isUserExist.email,
-    role: isUserExist.role,
+    userId: user._id,
+    email: user.email,
+    role: user.role,
   };
-  const accessToken = generateToken(
+
+  const newAccessToken = generateToken(
     jwtPayload,
     envVars.JWT_ACCESS_SECRET,
     envVars.JWT_ACCESS_EXPIRES,
   );
 
-  const newRefreshToken = generateToken(
+  const NewRefreshToken = generateToken(
     jwtPayload,
     envVars.JWT_REFRESH_SECRET,
     envVars.JWT_REFRESH_EXPIRES,
   );
 
-  return { accessToken, refreshToken: newRefreshToken };
+  return { accessToken: newAccessToken, refreshToken: NewRefreshToken };
 };
 
 export { createUserToken, createNewAccessTokenWithRefreshToken };

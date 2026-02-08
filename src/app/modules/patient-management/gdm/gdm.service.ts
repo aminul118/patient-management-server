@@ -26,12 +26,12 @@ const getAllPatients = async (query: Record<string, string>) => {
   const patients = await queryBuilder
     .search(gdmSearchableFields)
     .filter()
-    .fields()
+    .sort()
     .paginate()
-    .sort();
+    .fields();
 
   const [data, meta] = await Promise.all([
-    patients.build().select('-password'),
+    patients.build(),
     queryBuilder.getMeta(),
   ]);
 
@@ -39,6 +39,11 @@ const getAllPatients = async (query: Record<string, string>) => {
     data,
     meta,
   };
+};
+
+const getSinglePatientInfo = async (id: string) => {
+  const data = await Gdm.findById(id);
+  return data;
 };
 
 const deleteSinglePatientInfo = async (id: string) => {
@@ -55,4 +60,5 @@ export const GdmServices = {
   updateGdmPatient,
   getAllPatients,
   deleteSinglePatientInfo,
+  getSinglePatientInfo,
 };

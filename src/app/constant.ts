@@ -1,7 +1,1 @@
-export const excludeField: string[] = [
-  'search',
-  'sort',
-  'fields',
-  'page',
-  'limit',
-];
+export const excludeField = ['search', 'sort', 'page', 'limit', 'fields'];

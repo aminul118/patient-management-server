@@ -44,6 +44,18 @@ const getAllPatients = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSinglePatientInfo = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const data = await GdmServices.getSinglePatientInfo(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Gdm patient retrieved successfully',
+    data,
+  });
+});
+
 const deleteSinglePatientInfo = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -63,4 +75,5 @@ export const GdmController = {
   updatePatient,
   getAllPatients,
   deleteSinglePatientInfo,
+  getSinglePatientInfo,
 };
