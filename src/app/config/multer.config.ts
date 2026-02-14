@@ -5,24 +5,21 @@ import { cloudinaryUploads } from './cloudinary.config';
 const storage = new CloudinaryStorage({
   cloudinary: cloudinaryUploads,
   params: {
-    public_id: (req, file) => {
-      const fileName = file.originalname
+    public_id: (_req, file) => {
+      // Remove extension from the original name
+      const nameWithoutExtension = file.originalname
+        .split('.')
+        .slice(0, -1)
+        .join('.');
+
+      const fileName = nameWithoutExtension
         .toLowerCase()
-        .replace(/\s+/g, '-') // empty space remove replace with dash
-        .replace(/\./g, '-')
-        // eslint-disable-next-line no-useless-escape
-        .replace(/[^a-z0-9\-\.]/g, ''); // non alpha numeric - !@#$
+        .replace(/\s+/g, '-') // replace spaces with dashes
+        .replace(/[^a-z0-9-]/g, ''); // remove non-alphanumeric chars except dashes
 
-      const extension = file.originalname.split('.').pop();
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
 
-      const uniqueFileName =
-        Math.random().toString(36).substring(2) +
-        '-' +
-        Date.now() +
-        '-' +
-        fileName +
-        '.' +
-        extension;
+      const uniqueFileName = uniqueSuffix + '-' + fileName;
 
       return uniqueFileName;
     },
