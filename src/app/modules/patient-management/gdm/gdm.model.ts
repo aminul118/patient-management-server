@@ -4,7 +4,7 @@ import { IGdm } from './grm.interface';
 export const GdmSchema = new Schema<IGdm>(
   {
     // Step 1
-    patientId: { type: String, required: true },
+    patientId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     age: { type: String, required: true },
     maritalStatus: {
@@ -18,7 +18,7 @@ export const GdmSchema = new Schema<IGdm>(
     familyIncome: { type: String, required: true },
     address: { type: String, required: true },
     phone: { type: String, required: true },
-    emergencyContact: { type: String, required: true },
+    emergencyContact: { type: String },
 
     // Step 2
     diabetesKnownSince: {
@@ -31,6 +31,8 @@ export const GdmSchema = new Schema<IGdm>(
       enum: ['yes', 'no'],
     },
     comorbidity: { type: String },
+    complication: { type: String },
+    counselingDate: { type: Date },
 
     deliveryTimeInWeek: { type: String },
     deliveryType: {

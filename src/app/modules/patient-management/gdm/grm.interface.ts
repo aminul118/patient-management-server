@@ -12,13 +12,15 @@ export interface IGdm extends Document {
   familyIncome: string;
   address: string;
   phone: string;
-  emergencyContact: string;
+  emergencyContact?: string;
 
   // Step 2
   diabetesKnownSince?: 'before_pregnancy' | 'during_pregnancy' | 'custom';
   diabetesDuration?: string;
   insulin?: 'yes' | 'no';
   comorbidity?: string;
+  complication?: string;
+  counselingDate?: Date;
 
   deliveryTimeInWeek?: string;
   deliveryType?: 'normal' | 'c-section';

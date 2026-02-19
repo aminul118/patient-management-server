@@ -6,6 +6,14 @@ import { gdmSearchableFields } from './gdm.constant';
 import { QueryBuilder } from '../../../utils/QueryBuilder';
 
 const createGdmPatient = async (payload: IGdm) => {
+  const isPatientExists = await Gdm.findOne({
+    patientId: payload.patientId,
+  });
+
+  if (isPatientExists) {
+    throw new AppError(httpStatus.CONFLICT, 'Patient already exists!');
+  }
+
   const gdmPatient = await Gdm.create(payload);
   return gdmPatient;
 };
@@ -16,6 +24,15 @@ const updateGdmPatient = async (payload: IGdm, id: string) => {
   if (!patientExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'Gdm Patient not found');
   }
+
+  // Check for duplicate patientId if it's being updated
+  if (payload.patientId && payload.patientId !== patientExits.patientId) {
+    const duplicate = await Gdm.findOne({ patientId: payload.patientId });
+    if (duplicate) {
+      throw new AppError(httpStatus.CONFLICT, 'Patient ID already exists');
+    }
+  }
+
   const gdmPatient = await Gdm.findByIdAndUpdate(id, payload, { new: true });
   return gdmPatient;
 };
@@ -43,6 +60,11 @@ const getAllPatients = async (query: Record<string, string>) => {
 
 const getSinglePatientInfo = async (id: string) => {
   const data = await Gdm.findById(id);
+
+  if (!data) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Patient not found');
+  }
+
   return data;
 };
 
