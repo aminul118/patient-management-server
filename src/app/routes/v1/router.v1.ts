@@ -5,6 +5,9 @@ import { OTPRouter } from '../../modules/otp/otp.route';
 import { ContactRouter } from '../../modules/contact/contact.route';
 import { IModuleRoutes } from '../../types';
 import { GdmRouter } from '../../modules/patient-management/gdm/gdm.router';
+import { PcosRouter } from '../../modules/patient-management/pcos/pcos.router';
+import { InfertilityRouter } from '../../modules/patient-management/infertility/infertility.router';
+import { OverWeightRouter } from '../../modules/patient-management/over-weight/over-weight.router';
 import { StatsRouter } from '../../modules/stats/stats.routes';
 
 const router = Router();
@@ -29,6 +32,18 @@ const moduleRoutes: IModuleRoutes[] = [
   {
     path: '/gdm',
     element: GdmRouter,
+  },
+  {
+    path: '/pcos',
+    element: PcosRouter,
+  },
+  {
+    path: '/infertility',
+    element: InfertilityRouter,
+  },
+  {
+    path: '/over-weight',
+    element: OverWeightRouter,
   },
   {
     path: '/stats',

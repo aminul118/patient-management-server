@@ -1,0 +1,78 @@
+import { Request, Response } from 'express';
+import httpStatus from 'http-status-codes';
+import catchAsync from '../../../utils/catchAsync';
+import sendResponse from '../../../utils/sendResponse';
+import { OverWeightServices } from './over-weight.service';
+
+const createPatient = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+  const data = await OverWeightServices.createOverWeightPatient(payload);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OverWeight patient created successfully',
+    data,
+  });
+});
+
+const updatePatient = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+  const id = req.params.id;
+  const data = await OverWeightServices.updateOverWeightPatient(payload, id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OverWeight patient updated successfully',
+    data,
+  });
+});
+
+const getAllPatients = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query;
+  const { meta, data } = await OverWeightServices.getAllPatients(
+    query as Record<string, string>,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OverWeight patients retrieved successfully',
+    data,
+    meta,
+  });
+});
+
+const getSinglePatientInfo = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const data = await OverWeightServices.getSinglePatientInfo(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'OverWeight patient retrieved successfully',
+    data,
+  });
+});
+
+const deleteSinglePatientInfo = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const data = await OverWeightServices.deleteSinglePatientInfo(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'OverWeight patients delete successfully',
+      data,
+    });
+  },
+);
+
+export const OverWeightController = {
+  createPatient,
+  updatePatient,
+  getAllPatients,
+  deleteSinglePatientInfo,
+  getSinglePatientInfo,
+};
